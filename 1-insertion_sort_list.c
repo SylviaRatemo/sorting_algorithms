@@ -24,7 +24,6 @@ void insertion_sort_list(listint_t **list)
 
 	if (list == NULL)
 		return;
-	
 	temp = move_to_head(*list);
 
 	for (temp = temp->next; temp;)
