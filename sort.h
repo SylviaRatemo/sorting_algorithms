@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define INCREMENT 1
 #define DECREMENT -1
