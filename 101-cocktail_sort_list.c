@@ -2,46 +2,41 @@
 
 /**
  * swap_nodes - swap two nodes
- * @a: pointer to first node
- * @b: pointer to second node
+ * @list: pointer to list
+ * @node: pointer to node
  */
 
-void swap_nodes(listint_t *a, listint_t *b)
+void swap_nodes(listint_t **list, listint_t *node)
 {
-	if (a->prev)
-		a->prev->next = b;
-	if (b->next)
-		b->next->prev = a;
-	a->next = b->next;
-	b->prev = a->prev;
-	a->prev = b;
-	a->next = a;
+	node->next->prev = node->prev;
+
+	if (node->next->prev)
+		node->prev->next = node->next;
+	else
+		*list = node->next;
+
+	node->prev = node->next;
+	node->next = node->next->next;
+	node->prev->next = node;
+
+	if (node->next)
+		node->next->prev = node;
 }
 
 /**
- * reverse_sort - sorts from the tailend
- * @head: head of list
- * @tail: tail of list
- * Return: new head
+ * get_length - compute number of nodes in list
+ * @list: the doubly linked list
+ * Return: Number of nodes
  */
 
-listint_t *reverse_sort(listint_t *head, listint_t *tail, listint_t *list)
+listint_t *get_length(listint_t *list)
 {
-	while (tail && tail->prev)
-	{
-		if (tail->n < tail->prev->n)
-		{
-			swap_nodes(tail->prev, tail);
-			if (tail->prev == NULL)
-				list = tail;
-			print_list(list);
-		}
-		else
-			tail = tail->prev;
-		if (tail->prev == NULL)
-			head = tail;
-	}
-	return (head);
+	listint_t *curr = h;
+
+	while (curr->next != NULL)
+		curr = curr->next;
+
+	return (curr);
 }
 
 /**
@@ -51,40 +46,40 @@ listint_t *reverse_sort(listint_t *head, listint_t *tail, listint_t *list)
 
 void cocktail_sort_list(listint_t **list)
 {
-	listint_t *tail, *head, *ptr;
-	int i, j = 0, swapp = 1;
+	listint_t *curr = NULL, *left_limit = NULL, *right_limit = NULL;
+	int cycle_type = INCREMENT;
 
-	if (list == NULL)
+	if (!list || !(*list) || !(*list)->next)
 		return;
 
-	ptr = *list;
-	for (i = 0; ptr; i++)
-		ptr = ptr->next;
+	curr = *list;
+	left_limit = curr;
+	right_limit = get_dlistint_lelem(*list);
 
-	if (i < 2)
-		return;
-
-	head = *list;
-	while (j < i)
+	while (left_limit != right_limit)
 	{
-		swapp = 0;
-		while (head && head->next)
+		if (curr->n == curr->next->n)
+			break;
+		else if (curr->n > curr->next->n && cycle_type == INCREMENT)
+			swap_nodes(list, curr), print_list(*list);
+		else if (curr->next->n < curr->n && cycle_type == DECREMENT)
+			swap_nodes(list, curr), curr = curr->prev, print_list(*list);
+		else if (cycle_type == INCREMENT)
+			curr = curr->next;
+		else if (cycle_type == DECREMENT)
+			curr = curr->prev;
+
+		if (cycle_type == DECREMENT && curr->next == left_limit)
 		{
-			if (head->n > head->next->n)
-			{
-				swap_nodes(head, head->next);
-				swapp++;
-				if (head->prev->prev == NULL)
-					*list = head->prev;
-				print_list(*list);
-			}
-			else
-				head = head->next;
-			if (head->next == NULL)
-				tail = head;
+			cycle_type = INCREMENT;
+			curr = curr->next;
 		}
-		head = reverse_sort(head, tail, *list);
-		*list = head;
-		j++;
+
+		if (cycle_type == INCREMENT && curr->prev == right_limit)
+		{
+			right_limit = right_limit->prev;
+			cycle_type = DECREMENT;
+			curr = curr->prev;
+		}
 	}
 }
