@@ -4,6 +4,9 @@
 #include <stddef.h>
 #include <stdio.h>
 
+#define INCREMENT 1
+#define DECREMENT -1
+
 
 /**
  * struct listint_s - Doubly linked list node

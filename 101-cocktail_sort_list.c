@@ -31,7 +31,7 @@ void swap_nodes(listint_t **list, listint_t *node)
 
 listint_t *get_length(listint_t *list)
 {
-	listint_t *curr = h;
+	listint_t *curr = list;
 
 	while (curr->next != NULL)
 		curr = curr->next;
@@ -54,7 +54,7 @@ void cocktail_sort_list(listint_t **list)
 
 	curr = *list;
 	left_limit = curr;
-	right_limit = get_dlistint_lelem(*list);
+	right_limit = get_length(*list);
 
 	while (left_limit != right_limit)
 	{
