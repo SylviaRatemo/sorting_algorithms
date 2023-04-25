@@ -23,7 +23,7 @@ size_t get_gap(size_t size)
 
 void shell_sort(int *array, size_t size)
 {
-	size_t i, gap, j;
+	size_t i, gap = 1, j;
 	int temp;
 
 	if (array == NULL || size == 0)
