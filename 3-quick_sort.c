@@ -19,11 +19,12 @@ void swap(int *array, size_t size, int *a, int *b)
 }
 
 /**
- * lomuto_partition - partitions the array
+ * partition - partitions the array
  * @array: pointer to array
  * @size: the size of the array
  * @l: the low index of the sort range
  * @h: the high index of the sort range
+ * Return: index of partition point
  */
 size_t partition(int *array, size_t size, ssize_t l, ssize_t h)
 {
