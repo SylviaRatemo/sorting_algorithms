@@ -1,53 +1,68 @@
 #include "sort.h"
 
 /**
- * swap - swap elements in array
- * @array - pointer to array
- * @a: first element index
- * @b: second element index
+ * swap - swap elements and print new array
+ * @array: pointer to array
+ * @size: the size of the array
+ * @a: address of first element
+ * @b: address of second element
  */
-
-size_t swap(int *array, size_t a, size_t b)
+void swap(int *array, size_t size, int *a, int *b)
 {
-	int temp = array[a];
-	array[a] = array[b];
-	array[b] = temp;
-
-	return (a);
+	if (*a != *b)
+	{
+		int temp = *a;
+		*a = *b;
+		*b = temp;
+		print_array((const int *)array, size);
+	}
 }
 
 /**
- * quick_sort - sort array, ascending, Quick sort
- * @array: the array
- * @size: size of the array
+ * lomuto_partition - partitions the array
+ * @array: pointer to array
+ * @size: the size of the array
+ * @l: the low index of the sort range
+ * @h: the high index of the sort range
  */
+size_t partition(int *array, size_t size, ssize_t l, ssize_t h)
+{
+	int i, j, pivot = array[h];
 
+	for (i = j = l; j < h; j++)
+		if (array[j] < pivot)
+			swap(array, size, &array[j], &array[i++]);
+	swap(array, size, &array[i], &array[h]);
+
+	return (i);
+}
+
+/**
+ * quicksort - quicksorts via Lomuto partitioning scheme
+ * @array: pointer to array
+ * @size: the size of the array
+ * @l: the low index of the sort range
+ * @h: the high index of the sort range
+ */
+void quicksort(int *array, size_t size, ssize_t l, ssize_t h)
+{
+	if (l < h)
+	{
+		size_t p = partition(array, size, l, h);
+
+		quicksort(array, size, l, p - 1);
+		quicksort(array, size, p + 1, h);
+	}
+}
+
+/**
+ * quick_sort - run quicksort algorithm
+ * @array: pointer to array
+ * @size: the size of the array
+ */
 void quick_sort(int *array, size_t size)
 {
-	size_t p = size - 1, i = 0, j;
-
 	if (array == NULL || size == 0)
 		return;
-
-	while (array[i] < array[p] && i < p)
-		i++;
-
-	if (i < (size - 1))
-	{
-		p = swap(array, i, p);
-		print_array(array, size);
-		j = size - 1 - 1;
-		while (i < j)
-		{
-			if (array[j] < array[p])
-			{
-				swap(array, i, j);
-				print_array(array, size);
-				i++;
-			}
-			j--;
-		}
-	}
-	else
-		p = i--;
+	quicksort(array, size, 0, size - 1);
 }
