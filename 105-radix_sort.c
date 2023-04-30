@@ -8,9 +8,10 @@
 int max(int *array, int size)
 {
 	int i, max = array[0];
+
 	for (i = 0; i < size; i++)
 	{
-		if(array[i] > max)
+		if (array[i] > max)
 			max = array[i];
 	}
 	return (max);
@@ -53,15 +54,13 @@ void count_sort(int *array, int n, int pos)
 
 void radix_sort(int *array, size_t size)
 {
-	int mul = 1, max = max(array, size);
+	int mul = 1, m = max(array, size);
 
-	while (max)
+	while (m)
 	{
 		count_sort(array, size, mul);
 		mul *= 10;
-		max /= 10;
+		m /= 10;
 		print_array(array, size);
 	}
-}
-
 }
