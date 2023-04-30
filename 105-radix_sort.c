@@ -57,6 +57,9 @@ void radix_sort(int *array, size_t size)
 {
 	int mul = 1, m = max(array, size);
 
+	if (array == NULL || size < 2)
+		return;
+
 	while (m)
 	{
 		count_sort(array, size, mul);
