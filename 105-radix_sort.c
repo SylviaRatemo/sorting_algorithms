@@ -4,6 +4,7 @@
  * max - get maximum in array
  * @array: pointer to array
  * @size: size of array
+ * Return: maximum integer in array
  */
 int max(int *array, int size)
 {
