@@ -7,7 +7,7 @@
 
 #define INCREMENT 1
 #define DECREMENT -1
-
+#define range 10
 
 /**
  * struct listint_s - Doubly linked list node
