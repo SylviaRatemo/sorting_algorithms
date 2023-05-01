@@ -30,9 +30,6 @@ void count_sort(int *array, int n, int pos)
 	int i, freq[range] = {0};
 	int *output = (int *)malloc(n * sizeof(int));
 
-	if (array == NULL || n = 0)
-		return;
-
 	for (i = 0; i < n; i++)
 		freq[(array[i] / pos) % range]++;
 
