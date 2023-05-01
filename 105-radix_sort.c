@@ -30,6 +30,9 @@ void count_sort(int *array, int n, int pos)
 	int i, freq[range] = {0};
 	int *output = (int *)malloc(n * sizeof(int));
 
+	if (array == NULL || n = 0)
+		return;
+
 	for (i = 0; i < n; i++)
 		freq[(array[i] / pos) % range]++;
 
@@ -57,7 +60,7 @@ void radix_sort(int *array, size_t size)
 {
 	int mul = 1, m = max(array, size);
 
-	if (array == NULL || !array || size < 2)
+	if (array == NULL || !array || size == 0)
 		return;
 
 	while (m)
