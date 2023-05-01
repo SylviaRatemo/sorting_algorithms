@@ -58,7 +58,7 @@ void radix_sort(int *array, size_t size)
 	int mul = 1, m = max(array, size);
 
 	if (array == NULL || !array || size == 0 || size < 2)
-		return;
+		return (0);
 
 	while (m)
 	{
